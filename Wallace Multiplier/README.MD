@@ -1,8 +1,9 @@
 # Wallace Multiplier
+Wallace multiplier is theoritically a very efficient implementation for multiplication of 2 numbers. Various ways exist to implement it and in the assignment
 
 This code is written by Surya Prasad S. (EE19B121).
 
-There is one C code file namely 'Wallace_multiplier.c'. Please note that lesser number of registers are needed for synthesizing modules with lesser pipelines which is not explicitly seen in the register declaration. The number of synthesizable registers which are used are still optimised (considering that the Verilog register variables enabled with clock (clk) are physically synthesised as registers). The size of the adders are exactly as required and maximum number is used in the first stage. When run they generate two Verilog files, Wallace.v and tb_Wallace.v. 
+There is a C code file named 'Wallace_multiplier.c'. Please note that lesser number of registers are needed for synthesizing modules with lesser pipeline stages which is not explicitly seen in the register declaration. The number of synthesizable registers which are used are still optimised (considering that the Verilog register variables enabled with clock (clk) are physically synthesised as registers). Further modification is required to allow usage of wires in place of registers between levels of the same pipeline stage. The size of the adders are exactly as required and maximum number is used in the first stage. When run they generate two Verilog files, Wallace.v and tb_Wallace.v.
 
 **The user will be prompted to input the size of the Multiplier. In Wallace_multiplier.c, the user can also input the number of stages the pipeline should be done in. Input values to be given in the test bench is got from the user while running the c code.**
 
