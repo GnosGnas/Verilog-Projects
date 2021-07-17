@@ -2,9 +2,9 @@
 
 This code is written by Surya Prasad S. (EE19B121).
 
-There are two C code files namely 'Wallace_multiplier.c' and 'base_Wallace_multiplier.c'. I had first made the latter and then modified it to get the former so there could be some redundant codes in the generated verilog file. The number of registers which are used are still optimised (considering that the Verilog register variables enabled with clock (clk) are physically synthesised as registers). The size of the adders are exactly as required and maximum number is used in the first stage. When run they generate two Verilog files, Wallace.v and base_Wallace.v. 
+There is one C code file namely 'Wallace_multiplier.c'. Please note that lesser number of registers are needed for synthesizing modules with lesser pipelines which is not explicitly seen in the register declaration. The number of synthesizable registers which are used are still optimised (considering that the Verilog register variables enabled with clock (clk) are physically synthesised as registers). The size of the adders are exactly as required and maximum number is used in the first stage. When run they generate two Verilog files, Wallace.v and tb_Wallace.v. 
 
-**The user will be prompted to input the size of the Multiplier. In Wallace_multiplier.c, the user can also input the number of stages the pipeline should be done in. Two Test Bench files are also generated, tb_Wallace.v and tb_base_Wallace.v, for which the input values to the adder will be got from the user.**
+**The user will be prompted to input the size of the Multiplier. In Wallace_multiplier.c, the user can also input the number of stages the pipeline should be done in. Input values to be given in the test bench is got from the user while running the c code.**
 
 To run the C codes in Ubuntu terminal, type the following:
 
@@ -14,7 +14,7 @@ To run the C codes in Ubuntu terminal, type the following:
     $ gcc base_Wallace_multiplier.c -lm
     $ ./a.out
 
-    To run the Verilog files, I have used Iverilog and these are the commands for it:
+To run the Verilog files, I have used Iverilog and these are the commands for it:
 
     $ iverilog tb_Wallace.v Wallace.v
     $ ./a.out
