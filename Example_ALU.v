@@ -1,3 +1,4 @@
+//This ALU example is not based on any standard design and is only meant for getting experience in coding in Verilog
 //cout logic may not be perfect. Gives one when number is more than 8 and not supposed to be negative. Gives 0 in a case where it might have assumed the number to be negative before adding.
 //Also output in tb is in decimal form and doesn't identify negative numbers
 module ALU(in1,in2,sel,cin,M,out,cout,comparator,P,G);
