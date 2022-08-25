@@ -39,3 +39,7 @@ The time taken for the complete execution of a CSA is independent of the number 
 For 16-bit Wallace multiplier, the speed of execution will reduce with decreasing the number of stages. Optimised value would be when the number of stages is 3 or 4.
 
 For large multiplication, the number of registers will increase at the order of 3 while the time delay will increase at logarithmic rate (taking CLA to take maximum delay). So optimising registers can be given more priority.
+
+Issues to be resolved:
+1. Ports VALID_IN and VALID_OUT are needed.
+2. Functional validation is required for large input sizes
