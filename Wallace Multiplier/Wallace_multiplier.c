@@ -136,7 +136,7 @@ void main()
             fprintf(v, "\n\n\talways@(posedge clk)\n\tbegin\n\tres1 = t0[0][0];\n\tt1[1][%d:1] = w11;\n\tt1[2][%d:2] = w12;", N + 1, N + 2);
 
         else
-            fprintf(v, "\n\n\talways\n\tbegin\n\t#1 res1 = t0[0][0];\n\tt1[1][%d:1] = w11;\n\tt1[2][%d:2] = w12;", N + 1, N + 2);
+            fprintf(v, "\n\n\talways@(*)\n\tbegin\n\t res1 = t0[0][0];\n\tt1[1][%d:1] = w11;\n\tt1[2][%d:2] = w12;", N + 1, N + 2);
 
         for (j = 3; j < N - 2; j = j + 3)
             fprintf(v, "\n\tt1[%d][%d:%d] = w1%d;\n\tt1[%d][%d:%d] = w1%d[%d:1];", j, N + j + 1, j, j, j + 2, N + j + 2, j + 2, j + 1, N + 1);
@@ -206,13 +206,13 @@ void main()
                     fprintf(v, "\n\n\talways@(posedge clk)\n\tres%d = {t%d[%d][%d],res%d};", i + 1, i, i, i, i);
             }
             else {
-                fprintf(v, "\n\n\talways\n\tbegin\n\t#1 t%d[%d][%d:%d] = w%d1;\n\tt%d[%d][%d:%d] = w%d2;\n\tend", i + 1, j, d + i, j, i + 1, i + 1, j + 1, d + i + 1, j + 1, i + 1);
+                fprintf(v, "\n\n\talways@(*)\n\tbegin\n\t t%d[%d][%d:%d] = w%d1;\n\tt%d[%d][%d:%d] = w%d2;\n\tend", i + 1, j, d + i, j, i + 1, i + 1, j + 1, d + i + 1, j + 1, i + 1);
 
                 if (j != i + 1)
-                    fprintf(v, "\n\n\talways\n\t#1 res%d = {t%d[%d][%d:%d],res%d};", i + 1, i, i, j - 1, i, i);
+                    fprintf(v, "\n\n\talways@(*)\n\t res%d = {t%d[%d][%d:%d],res%d};", i + 1, i, i, j - 1, i, i);
 
                 else
-                    fprintf(v, "\n\n\talways\n\t#1 res%d = {t%d[%d][%d],res%d};", i + 1, i, i, i, i);
+                    fprintf(v, "\n\n\talways@(*)\n\t res%d = {t%d[%d][%d],res%d};", i + 1, i, i, i, i);
             }
 
             //Updating the trackers
@@ -262,7 +262,7 @@ void main()
                     fprintf(v, "\n\n\talways@(posedge clk)\n\tbegin\n\tt%d[%d][%d:%d] = w%d%d;\n\tt%d[%d][%d:%d] = w%d%d[%d:%d];\n\tend", i + 1, j, d + j - 1, j, i + 1, j, i + 1, k + 1, d + j, k + 1, i + 1, j + 1, d - 1, k - j);
 
                 else
-                    fprintf(v, "\n\n\talways\n\tbegin\n\t#1 t%d[%d][%d:%d] = w%d%d;\n\tt%d[%d][%d:%d] = w%d%d[%d:%d];\n\tend", i + 1, j, d + j - 1, j, i + 1, j, i + 1, k + 1, d + j, k + 1, i + 1, j + 1, d - 1, k - j);
+                    fprintf(v, "\n\n\talways@(*)\n\tbegin\n\t t%d[%d][%d:%d] = w%d%d;\n\tt%d[%d][%d:%d] = w%d%d[%d:%d];\n\tend", i + 1, j, d + j - 1, j, i + 1, j, i + 1, k + 1, d + j, k + 1, i + 1, j + 1, d - 1, k - j);
 
                 //Updating the trackers
                 csa_t[d - k + j] = 1;
@@ -281,7 +281,7 @@ void main()
                     fprintf(v, "\n\n\talways@(posedge clk)\n\tbegin;");
 
                 else {
-                    fprintf(v, "\n\n\talways\n\tbegin\n\t#1 t%d[%d] = t%d[%d];", lvl, pos, lvl - 1, pos);
+                    fprintf(v, "\n\n\talways@(*)\n\tbegin\n\t t%d[%d] = t%d[%d];", lvl, pos, lvl - 1, pos);
                     pos++;
                 }
 
@@ -340,7 +340,7 @@ void main()
 
     //The verilog code for Testbench is being stored in tb_Wallace.v
     fprintf(tb, "module tb;\n\treg [%d:0] a,b;\n\twire [%d:0] out;\n\treg clk;\n\n\tMULT M(a,b,out,clk);", N - 1, 2 * N - 1);
-    fprintf(tb, "\n\n\talways\n\t#%d clk = !clk;",clk);
+    fprintf(tb, "\n\n\talways@(*)\n\t#%d clk = !clk;",clk);
     fprintf(tb, "\n\n\tinitial\n\tbegin\n\ta = %d;\n\tb = %d;\n\tclk = 0;", a, b);
     fprintf(tb, "\n\n\t$monitor($time,\" %%d x %%d = %%d \",a,b,out);\n\n\t#%d $finish;\n\tend\nendmodule", 1000 * N);
 
